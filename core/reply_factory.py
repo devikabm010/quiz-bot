@@ -28,10 +28,20 @@ def generate_bot_responses(message, session):
     return bot_responses
 
 
+
 def record_current_answer(answer, current_question_id, session):
-    '''
-    Validates and stores the answer for the current question to django session.
-    '''
+   
+    if current_question_id is None:
+        return False, "No question is currently active."
+
+    # Validate the answer is not empty
+    if not answer or not answer.strip():
+        return False, "The answer cannot be empty. Please provide a valid response."
+
+    # Store the answer in the session, prefixed with 'answer_' for organization
+    session[f"answer_{current_question_id}"] = answer.strip()
+
+    # Return success
     return True, ""
 
 
