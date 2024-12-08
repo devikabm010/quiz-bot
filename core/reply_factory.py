@@ -36,12 +36,18 @@ def record_current_answer(answer, current_question_id, session):
 
 
 def get_next_question(current_question_id):
-    '''
-    Fetches the next question from the PYTHON_QUESTION_LIST based on the current_question_id.
-    '''
+    if current_question_id is None:
+        return PYTHON_QUESTION_LIST[0], 0
 
-    return "dummy question", -1
+    # Calculate the next question ID
+    next_question_id = current_question_id + 1
 
+    # Check if the next question ID is valid
+    if next_question_id < len(PYTHON_QUESTION_LIST):
+        return PYTHON_QUESTION_LIST[next_question_id], next_question_id
+
+    # If no more questions are available, return None
+    return None, None
 
 def generate_final_response(session):
     '''
